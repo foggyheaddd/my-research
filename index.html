@@ -1,17 +1,106 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Исследование</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Психологическое исследование</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 15px;
+      line-height: 1.6;
+    }
+    .step {
+      display: none;
+    }
+    .step.active {
+      display: block;
+    }
+    button, input, select, textarea, label {
+      margin: 6px 0;
+      padding: 8px;
+      font-size: 16px;
+    }
+    button {
+      cursor: pointer;
+    }
+    .sex-btn {
+      margin-right: 10px;
+      opacity: 0.7;
+    }
+    .sex-btn.selected {
+      opacity: 1;
+      background-color: #e0e0ff;
+    }
+    #sexError {
+      color: red;
+      display: none;
+    }
+    iframe {
+      width: 100%;
+      max-width: 560px;
+      height: 315px;
+      margin: 15px 0;
+    }
+  </style>
 </head>
 <body>
-  <div id="app">
-    <h1>Добро пожаловать!</h1>
-    <!-- Сюда будет подгружаться контент по шагам -->
+
+  <!-- Шаг 1: Регистрация -->
+  <div id="step1" class="step active">
+    <h2>Регистрация</h2>
+    <p><strong>Ваш пол:</strong></p>
+    <button class="sex-btn" onclick="setSex('male')">Мужской</button>
+    <button class="sex-btn" onclick="setSex('female')">Женский</button>
+    <p id="sexError">Пожалуйста, выберите пол.</p>
+
+    <p><label>Возраст: <input type="number" id="age" min="14" max="100" placeholder="18"></label></p>
+    <p><label>Сфера деятельности: <input type="text" id="field" placeholder="Психология, IT, студент и т.д."></label></p>
+
+    <p><label><input type="checkbox" id="consent1"> Даю согласие на обработку персональных данных</label></p>
+    <p><label><input type="checkbox" id="consent2"> Подтверждаю отсутствие психических и неврологических заболеваний</label></p>
+
+    <p><label>Тип личности (MBTI, опционально): <input type="text" id="mbti" placeholder="например, INFP"></label></p>
+
+    <button onclick="goToPANAS1()">Далее → PANAS</button>
   </div>
 
-  <!-- Подключаем наш JavaScript -->
+  <!-- Шаг 2: PANAS 1 -->
+  <div id="step2" class="step">
+    <div id="panas1Content"></div>
+    <button onclick="submitPANAS1()">Далее</button>
+  </div>
+
+  <!-- Шаг 3: Видео -->
+  <div id="stepVideo" class="step">
+    <h2>Просмотр видео</h2>
+    <p>Пожалуйста, посмотрите видео до конца:</p>
+    <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+    <br>
+    <button onclick="afterVideo()">Всё, посмотрел</button>
+  </div>
+
+  <!-- Шаг 4: PANAS 2 -->
+  <div id="stepPANAS2" class="step">
+    <div id="panas2Content"></div>
+  </div>
+
+  <!-- Шаг 5: Оценка утверждений -->
+  <div id="stepRatings" class="step">
+    <div id="statementsContent"></div>
+  </div>
+
+  <!-- Шаг 6: Обратная связь -->
+  <div id="stepFeedback" class="step">
+    <h2>Обратная связь (опционально)</h2>
+    <p>Вы можете написать всё, что хотите:</p>
+    <textarea id="feedback" rows="5" style="width:100%;"></textarea>
+    <br>
+    <button onclick="submitAll()">Отправить данные и завершить</button>
+  </div>
+
   <script src="app.js"></script>
 </body>
-
 </html>
