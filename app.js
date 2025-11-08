@@ -150,27 +150,29 @@ function submitPANAS1() {
   }
 
   // Дальше — в зависимости от группы
-  if (participant.group === 2) {
-  renderVideo('negative');
+  if (participant.group === 1) {
+  renderStatements();
+  showStep('stepRatings');
+} else if (participant.group === 2) {
+  renderVideo('negative_video.mp4');
   showStep('stepVideo');
 } else if (participant.group === 3) {
-  renderVideo('positive');
+  renderVideo('positive_video.mp4');
   showStep('stepVideo');
 }
 }
 
 // ============ ШАГ 3: ВИДЕО ============
-function renderVideo(videoType) {
-  const videoSrc = videoType === 'negative' 
-    ? 'negative_video.mp4' 
-    : 'positive_video.mp4';
-
-  document.getElementById('videoFrame').innerHTML = `
-    <video controls width="100%" max-width="560px" height="315px">
+function renderVideo(videoSrc) {
+  const videoHtml = `
+    <h2>Просмотр видео</h2>
+    <p>Пожалуйста, посмотрите видео до конца:</p>
+    <video width="100%" height="315" controls>
       <source src="${videoSrc}" type="video/mp4">
-      Ваш браузер не поддерживает воспроизведение видео.
+      Ваш браузер не поддерживает видео.
     </video>
   `;
+  document.getElementById('stepVideo').innerHTML = videoHtml + '<br><button onclick="afterVideo()">Всё, посмотрел</button>';
 }
 
 function afterVideo() {
@@ -276,4 +278,5 @@ function submitAll() {
   });
 
 }
+
 
